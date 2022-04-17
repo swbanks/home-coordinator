@@ -1,24 +1,24 @@
-# home-coordinator
+# README
 
-## Project setup
-```
-yarn install
-```
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+Things you may want to cover:
 
-### Compiles and minifies for production
-```
-yarn build
-```
+* Ruby version
 
-### Lints and fixes files
-```
-yarn lint
-```
+* System dependencies
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+* Configuration
+
+* Database creation
+
+* Database initialization
+
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...
