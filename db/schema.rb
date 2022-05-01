@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_22_002851) do
+ActiveRecord::Schema.define(version: 2022_05_01_032952) do
+
+  create_table "chore_calendar", force: :cascade do |t|
+    t.integer "chore_id"
+    t.integer "user_id"
+    t.date "chore_date"
+    t.boolean "user_completed"
+    t.boolean "checked"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["chore_id"], name: "index_chore_calendar_on_chore_id"
+    t.index ["user_id"], name: "index_chore_calendar_on_user_id"
+  end
 
   create_table "chore_config", force: :cascade do |t|
     t.integer "chore_id"
