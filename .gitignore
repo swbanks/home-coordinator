@@ -3,7 +3,8 @@ node_modules
 log/*
 tmp
 /dist
-
+config/master.key
+config/credentials.yml.enc
 
 # local env files
 .env.local
