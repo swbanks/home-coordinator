@@ -18,4 +18,7 @@
 #
 class ChoreCalendar < ApplicationRecord
     self.table_name = "chore_calendar"
+
+    belongs_to :user
+    belongs_to :chore
 end
