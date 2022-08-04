@@ -6,6 +6,7 @@ tmp
 config/master.key
 config/credentials.yml.enc
 .rspec_status
+public/packs
 
 # local env files
 .env.local
