@@ -5,6 +5,7 @@ tmp
 /dist
 config/master.key
 config/credentials.yml.enc
+.rspec_status
 
 # local env files
 .env.local
