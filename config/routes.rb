@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root to: 'site#index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  resources :users
-  resources :chores
+  namespace :api do
+    resources :users
+    resources :chores
+  end
 end

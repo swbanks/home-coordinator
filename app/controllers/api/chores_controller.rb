@@ -1,4 +1,4 @@
-class ChoresController < ApplicationController
+class Api::ChoresController < ApplicationController
   # renders all the chores
   def index
     chores = []
