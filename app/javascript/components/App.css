@@ -1,0 +1,11 @@
+.grid {
+  display: grid;
+  grid-template-columns: 50% 30px;
+  grid-gap: 10px;
+  margin: 20px;
+}
+
+.item {
+  min-height: 20px;
+  background-color: #eee;
+}
