@@ -6,6 +6,7 @@
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.4.3",
+    "axios": "^0.27.2",
     "esbuild": "^0.14.53",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
@@ -18,6 +19,7 @@
   "devDependencies": {
     "webpack-dev-server": "^3"
   },
+  "proxy": "http://localhost:3000",
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets --loader:.js=jsx",
     "watch": "esbuild app/javascript/*.* --watch --bundle --outdir=app/assets/builds --loader:.js=jsx"

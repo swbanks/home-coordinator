@@ -1,9 +1,15 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { getDailyChoreCalendarForUser } from '../services/ChoreCalendarService';
 
 const DailyChoreList = ({ name }) => {
-  const choreList = [{id: 1, name: "Dishes", checked: false}, {id: 2, name: "Laundry", checked: true}];
-  const [chores, setChores] = useState(choreList);
+  const [chores, setChores] = useState([]);
+
+  useEffect(() => {
+    getDailyChoreCalendarForUser("Joshua", "2022-07-12")
+      .then(response => {
+        setChores(response);
+      });
+  }, []);
 
   const handleChoreCheckChanged = (index) => {
     newChores = [...chores];
@@ -20,7 +26,7 @@ const DailyChoreList = ({ name }) => {
         {chores.map((chore, index) => {
           return (
             <>
-              <div className="item">{chore.name}</div>
+              <div className="item">{chore.chore.name}</div>
               <input 
                 type="checkbox"
                 checked={chore.checked}
