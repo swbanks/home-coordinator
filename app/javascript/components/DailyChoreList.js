@@ -5,7 +5,7 @@ const DailyChoreList = ({ name }) => {
   const [chores, setChores] = useState([]);
 
   useEffect(() => {
-    getDailyChoreCalendarForUser("Joshua", "2022-07-12")
+    getDailyChoreCalendarForUser("Joshua", "2022-08-12")
       .then(response => {
         setChores(response);
       });

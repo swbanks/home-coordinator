@@ -2,13 +2,13 @@
 #
 # Table name: chore_config
 #
-#  id            :integer          not null, primary key
+#  id            :bigint           not null, primary key
 #  active        :boolean
 #  all_users     :boolean
 #  schedule_type :integer
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  chore_id      :integer
+#  chore_id      :bigint
 #
 # Indexes
 #
