@@ -8,6 +8,6 @@ class Api::ChoreCalendarController < ApplicationController
   def show
     chore_date = Date.parse(params[:date])
     chores = ChoreCalendarService.get_daily_chores_for_user(params[:user], chore_date)
-    render json: chores.to_json(only: [:checked, :user_completed], :include => {:chore => {:only => :name}})
+    render json: chores.empty? ? [] : chores.to_json(only: [:checked, :user_completed], :include => {:chore => {:only => :name}})
   end
 end
