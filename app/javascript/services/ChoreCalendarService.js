@@ -9,3 +9,11 @@ export async function getDailyChoreCalendarForUser(userName, date) {
       return [];
   }
 }
+
+export async function updateChores(chores) {
+  try{
+    const response = await axios.patch(`/api/chore_calendar`, chores);
+  } catch(error) {
+      console.log(`Error in function updateChores, ${error}`);
+  }
+}

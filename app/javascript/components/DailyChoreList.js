@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getDailyChoreCalendarForUser } from '../services/ChoreCalendarService';
+import { getDailyChoreCalendarForUser, updateChores } from '../services/ChoreCalendarService';
 import { isEmpty } from 'lodash';
 
 const DailyChoreList = () => {
@@ -9,7 +9,7 @@ const DailyChoreList = () => {
 
   const handleChoreCheckChanged = (index) => {
     newChores = [...chores];
-    newChores[index].checked = !newChores[index].checked;
+    newChores[index].user_completed = !newChores[index].user_completed;
     setChores(newChores);
   };
 
@@ -24,6 +24,10 @@ const DailyChoreList = () => {
         setIsFetched(true);
         setChores(response);
       });
+  };
+
+  const save = () => {
+    updateChores(chores);
   };
 
   return (
@@ -54,7 +58,7 @@ const DailyChoreList = () => {
               <div className="item">{chore.chore.name}</div>
               <input 
                 type="checkbox"
-                checked={chore.checked}
+                checked={chore.user_completed}
                 onChange={() => handleChoreCheckChanged(index)}
                 key={chore.id}
               >
@@ -62,6 +66,7 @@ const DailyChoreList = () => {
             </>
           );
         })}
+        <button className="save" onClick={() => save()}>Save</button>
       </div>}
     </>
   );
