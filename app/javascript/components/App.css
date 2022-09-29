@@ -5,6 +5,13 @@
   margin: 20px;
 }
 
+.grid-parent-checker {
+  display: grid;
+  grid-template-columns: 50% 100px 100px;
+  grid-gap: 10px;
+  margin: 20px;
+}
+
 .item {
   min-height: 20px;
   background-color: #eee;

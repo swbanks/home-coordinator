@@ -7,7 +7,7 @@ module ChoreCalendarService
   def self.update_daily_chores(chore_list)
     chore_list.each do |chore|
       chore_calendar = ChoreCalendar.find(chore[:id])
-      chore_calendar.update!(user_completed: chore[:user_completed])
+      chore_calendar.update!(user_completed: chore[:user_completed], checked: chore[:checked])
     end
   end
 end
