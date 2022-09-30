@@ -17,6 +17,7 @@ const ParentChoreChecker = () => {
   const names = ["Nathanael", "Joshua", "Caleb", "Annalise"];
   const [choreUserName, setChoreUserName] = useState("");
   const [chores, setChores] = useState(null);
+  const [isSaved, setIsSaved] = useState(false);
 
   const handleChoreCheckChanged = (index) => {
     newChores = [...chores];
@@ -25,7 +26,11 @@ const ParentChoreChecker = () => {
   };
 
   const save = () => {
-    updateChores(chores);
+    updateChores(chores)
+      .then(_ => {
+        setIsSaved(true);
+        setTimeout(() => setIsSaved(false), 7000);
+    });
   };
 
   const selectChoreUserChange = (event) => {
@@ -41,6 +46,8 @@ const ParentChoreChecker = () => {
 
   return (
     <>
+      <div className={isSaved ? "message-bar" : "empty-message-bar"}>Chore status has been saved.</div>
+
       <h1>Welcome parent! Please select which child's chores to check:</h1>
       <select onChange={selectChoreUserChange}>
         <option>Select</option>

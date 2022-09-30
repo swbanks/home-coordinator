@@ -16,3 +16,34 @@
   min-height: 20px;
   background-color: #eee;
 }
+
+.empty-message-bar {
+  display: none;
+}
+
+.message-bar {
+  background-color: #4caf50;
+  width: 100%;
+  height: 30px;
+  color: white;
+  text-align: center;
+  font-size: 24px;
+
+  animation:message-fade 2s 1;
+  -webkit-animation:message-fade 2s 1;
+  animation-fill-mode: forwards;
+
+  animation-delay:5s;
+  -webkit-animation-delay:5s; /* Safari and Chrome */
+  -webkit-animation-fill-mode: forwards;
+}
+
+@keyframes message-fade {
+  from {opacity :1;}
+  to {opacity :0;}
+}
+
+@-webkit-keyframes message-fade {
+  from {opacity :1;}
+  to {opacity :0;}
+}
