@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { getDailyChoreCalendarForUser, updateChores } from '../services/ChoreCalendarService';
 import { isEmpty } from 'lodash';
+import { format } from 'date-fns';
 
 const DailyChoreList = () => {
   const [chores, setChores] = useState(null);
   const [name, setName] = useState("");
   const [isFetched, setIsFetched] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
   const handleChoreCheckChanged = (index) => {
     newChores = [...chores];
@@ -27,11 +29,17 @@ const DailyChoreList = () => {
   };
 
   const save = () => {
-    updateChores(chores);
+    updateChores(chores)
+      .then(_ => {
+        setIsSaved(true);
+        setTimeout(() => setIsSaved(false), 7000);
+    });
   };
 
   return (
     <>
+      <div className={isSaved ? "message-bar" : "empty-message-bar"}>Chore status has been saved.</div>
+
       {!isFetched && <form onSubmit={handleSubmit}>
         <label>
           Please enter your name:
@@ -50,7 +58,11 @@ const DailyChoreList = () => {
           <button onClick={() => startOver()}>Start Over</button>
         </>
       }
-      {!isEmpty(chores) && <h1>Hello, {name}! Here are your chores for today:</h1>}
+      {!isEmpty(chores) && <>
+        <h2 className="header">Hello, {name}!</h2>
+        <h2 className="header">Today is {format(new Date(), "eeee MMMM do yyyy")} and here are your chores for today:</h2>
+      </>
+      }
       {!isEmpty(chores) && <div className="grid">
         {chores.map((chore, index) => {
           return (
