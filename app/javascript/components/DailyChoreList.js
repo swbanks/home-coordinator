@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import {useLocation} from 'react-router-dom';
 import { getDailyChoreCalendarForUser, updateChores } from '../services/ChoreCalendarService';
 import { isEmpty } from 'lodash';
 import { format } from 'date-fns';
 
 const DailyChoreList = () => {
+  const { state } = useLocation();
+  const { name } = state;
   const [chores, setChores] = useState(null);
-  const [name, setName] = useState("");
   const [isFetched, setIsFetched] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+
+  useEffect(() => {
+    if (!state) return;
+    getDailyChoreCalendarForUser(state.name, "2022-08-12")
+      .then(response => {
+        setChores(response);
+        setIsFetched(true);
+      });
+  }, []);
 
   const handleChoreCheckChanged = (index) => {
     newChores = [...chores];
@@ -17,15 +28,6 @@ const DailyChoreList = () => {
 
   const startOver = () => {
     setIsFetched(false);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    getDailyChoreCalendarForUser(name, "2022-08-12")
-      .then(response => {
-        setIsFetched(true);
-        setChores(response);
-      });
   };
 
   const save = () => {
@@ -39,18 +41,6 @@ const DailyChoreList = () => {
   return (
     <>
       <div className={isSaved ? "message-bar" : "empty-message-bar"}>Chore status has been saved.</div>
-
-      {!isFetched && <form onSubmit={handleSubmit}>
-        <label>
-          Please enter your name:
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>}
 
       {isFetched && isEmpty(chores) &&
         <>

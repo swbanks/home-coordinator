@@ -15,7 +15,7 @@ const Login = () => {
   };
 
   const handleSubmit = () => {
-    requirePassword ? navigate('/parent_checker') : navigate('/chores');
+    requirePassword ? navigate('/parent_checker') : navigate('/chores', { state: { name: userName } });
   };
   
   return (
