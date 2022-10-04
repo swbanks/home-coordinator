@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import {useNavigate} from 'react-router-dom';
 
 //Need to add router and better formatting
 const Login = () => {
+  const navigate = useNavigate();
+
   const [requirePassword, setRequirePassword] = useState(false);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -12,7 +15,7 @@ const Login = () => {
   };
 
   const handleSubmit = () => {
-    return true;
+    requirePassword ? navigate('/parent_checker') : navigate('/chores');
   };
   
   return (
