@@ -14,6 +14,8 @@ import { getDailyChoreCalendarForUser, updateChores } from '../services/ChoreCal
 import { isEmpty } from 'lodash';
 
 const ParentChoreChecker = () => {
+  const currentDate = new Date().toJSON().slice(0, 10);
+
   const names = ["Nathanael", "Joshua", "Caleb", "Annalise"];
   const [choreUserName, setChoreUserName] = useState("");
   const [chores, setChores] = useState(null);
@@ -38,7 +40,7 @@ const ParentChoreChecker = () => {
     if (value == "Select" || value == choreUserName) return;
 
     setChoreUserName(value);
-    getDailyChoreCalendarForUser(value, "2022-08-12")
+    getDailyChoreCalendarForUser(value, currentDate)
       .then(response => {
         setChores(response);
       });

@@ -19,6 +19,10 @@ class ChoreConfig < ApplicationRecord
 
   enum schedule_type: {
     all_users_all_days: 0,
-    rotate_users_each_week: 1,
+    specific_users_every_day: 1,
+    specific_users_specific_days: 2,
+    all_users_specific_days: 3,
+    rotate_users_each_week: 4,
+    rotate_users_each_day: 5
   }
 end

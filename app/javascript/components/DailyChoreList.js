@@ -5,6 +5,8 @@ import { isEmpty } from 'lodash';
 import { format } from 'date-fns';
 
 const DailyChoreList = () => {
+  const currentDate = new Date().toJSON().slice(0, 10);
+
   const { state } = useLocation();
   const { name } = state;
   const [chores, setChores] = useState(null);
@@ -13,7 +15,7 @@ const DailyChoreList = () => {
 
   useEffect(() => {
     if (!state) return;
-    getDailyChoreCalendarForUser(state.name, "2022-08-12")
+    getDailyChoreCalendarForUser(state.name, currentDate)
       .then(response => {
         setChores(response);
         setIsFetched(true);

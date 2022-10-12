@@ -8,37 +8,54 @@
 
 # create users, chores, and chore_config records
 
+# users
 nate = User.create(name: "Nathanael")
 josh = User.create(name: "Joshua")
 caleb = User.create(name: "Caleb")
 annalise = User.create(name: "Annalise")
 
+
+# chores
+
+# all users all days
+br = Chore.create(name: "Bedroom")
+teeth = Chore.create(name: "Brush Teeth After Lunch")
 devos = Chore.create(name: "Devotions")
 mv = Chore.create(name: "Memory Verse")
-water = Chore.create(name: "Drink Water Bottle")
-teeth = Chore.create(name: "Brush Teeth After Lunch")
-piano = Chore.create(name: "Piano Practice")
+
+# all users, specific days
+homework = Chore.create(name: "Homework")
+
+# specific users, all days
 lr = Chore.create(name: "Living Room")
 kitchen = Chore.create(name: "Kitchen")
 dr = Chore.create(name: "Dining Room")
-br = Chore.create(name: "Bedroom")
-porch = Chore.create(name: "Porch")
 shoes = Chore.create(name: "Organize Shoes")
+piano = Chore.create(name: "Piano Practice")
 
-c_laundry = Chore.create(name: "Collect Laundry")
-wash_laundry = Chore.create(name: "Wash/Dry Laundry")
-fold_laundry = Chore.create(name: "Sort/Fold Laundry")
-load_dw = Chore.create(name: "Load Dishwasher")
+# specific users, specific days
+
+# rotate weekly
+trash = Chore.create(name: "Take Trash Out")
 empty_dw = Chore.create(name: "Empty Dishwasher")
 
+# rotate daily
+fold_laundry = Chore.create(name: "Sort/Fold Laundry")
+
+# not categorized yet
+load_dw = Chore.create(name: "Load Dishwasher")
+water = Chore.create(name: "Drink Water Bottle")
 
 
-# types of chores
-# piano - specific users, all days
-# living room - rotate weekdays specific users, every user weekends
-# kitchen, dining room, porch, shoes - specific users, all days
+# chore config
 ChoreConfig.create(active: true, all_users: true, schedule_type: ChoreConfig.schedule_types[:all_users_all_days], chore_id: devos.id)
 ChoreConfig.create(active: true, all_users: true, schedule_type: ChoreConfig.schedule_types[:all_users_all_days], chore_id: mv.id)
 ChoreConfig.create(active: true, all_users: true, schedule_type: ChoreConfig.schedule_types[:all_users_all_days], chore_id: teeth.id)
 ChoreConfig.create(active: true, all_users: true, schedule_type: ChoreConfig.schedule_types[:all_users_all_days], chore_id: br.id)
-ChoreConfig.create(active: true, all_users: true, schedule_type: ChoreConfig.schedule_types[:all_users_all_days], chore_id: water.id)
+
+ChoreConfig.create(active: true, all_users: true, schedule_type: ChoreConfig.schedule_types[:rotate_users_each_week], chore_id: trash.id)
+ChoreConfig.create(active: true, all_users: true, schedule_type: ChoreConfig.schedule_types[:rotate_users_each_week], chore_id: empty_dw.id)
+
+# create a "last user" for the previous month when initially seeding
+ChoreCalendar.create(chore_id: trash.id, user_id: nate.id, chore_date: Time.now.last_month.end_of_month.to_date)
+ChoreCalendar.create(chore_id: empty_dw.id, user_id: josh.id, chore_date: Time.now.last_month.end_of_month.to_date)
