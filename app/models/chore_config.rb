@@ -25,4 +25,6 @@ class ChoreConfig < ApplicationRecord
     rotate_users_each_week: 4,
     rotate_users_each_day: 5
   }
+
+  has_many :chore_config_users
 end
