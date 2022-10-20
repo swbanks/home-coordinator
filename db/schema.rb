@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_19_024551) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_20_194531) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -29,10 +29,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_19_024551) do
   create_table "chore_config", force: :cascade do |t|
     t.bigint "chore_id"
     t.integer "schedule_type"
-    t.boolean "all_users"
     t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "chore_days"
     t.index ["chore_id"], name: "index_chore_config_on_chore_id"
   end
 
