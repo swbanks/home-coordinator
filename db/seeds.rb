@@ -72,3 +72,4 @@ water = Chore.find_by(name: "Drink Water Bottle") || Chore.create(name: "Drink W
 # create a "last user" for the previous month when initially seeding
 ChoreCalendar.create(chore_id: trash.id, user_id: nate.id, chore_date: Time.now.last_month.end_of_month.to_date)
 ChoreCalendar.create(chore_id: empty_dw.id, user_id: josh.id, chore_date: Time.now.last_month.end_of_month.to_date)
+ChoreCalendar.create(chore_id: fold_laundry.id, user_id: caleb.id, chore_date: Time.now.last_month.end_of_month.to_date)
