@@ -10,7 +10,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
   
   const onUserTypeChange = (event) => {
-    console.log(event.target.value);
     setRequirePassword(event.target.value == 'Parent');
   };
 

@@ -40,9 +40,21 @@ const DailyChoreList = () => {
     });
   };
 
+  const areAllChoresMarkedCompleted = () => {
+    if(chores === null) return false;
+    return chores.every((chore) => chore.user_completed && chore.checked);
+  };
+
   return (
     <>
       <div className={isSaved ? "message-bar" : "empty-message-bar"}>Chore status has been saved.</div>
+
+      {isFetched && !isEmpty(chores) && areAllChoresMarkedCompleted() &&
+        <>
+          <h1>{name}, you are finished with all your chores for the day! Go you!</h1>
+          <img src="https://bestanimations.com/media/fireworks/1376251952ba-large-white-shells-fireworks-amazing-gif-pic.gif#.Y1h1OFfda1M.link" ></img>
+        </>
+      }
 
       {isFetched && isEmpty(chores) &&
         <>
@@ -50,12 +62,12 @@ const DailyChoreList = () => {
           <button onClick={() => startOver()}>Start Over</button>
         </>
       }
-      {!isEmpty(chores) && <>
+      {!areAllChoresMarkedCompleted() && !isEmpty(chores) && <>
         <h2 className="header">Hello, {name}!</h2>
         <h2 className="header">Today is {format(new Date(), "eeee MMMM do yyyy")} and here are your chores for today:</h2>
       </>
       }
-      {!isEmpty(chores) && <div className="grid">
+      {!areAllChoresMarkedCompleted() && !isEmpty(chores) && <div className="grid">
         {chores.map((chore, index) => {
           return (
             <>
