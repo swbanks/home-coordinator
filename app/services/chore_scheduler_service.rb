@@ -69,23 +69,28 @@ module ChoreSchedulerService
   end
 
   def self.rotate_users_each_week
-    chore_ids = ChoreConfig.where(schedule_type: ChoreConfig.schedule_types[:rotate_users_each_week]).where(active: true).pluck(:chore_id)
+    chore_info = ChoreConfig.where(schedule_type: ChoreConfig.schedule_types[:rotate_users_each_week]).where(active: true).pluck(:id, :chore_id)
     now = Time.now
 
-    chore_ids.each do |chore_id|
+    chore_info.each do |chore_config_id, chore_id|
+      valid_user_ids = ChoreConfigUser.where(chore_config_id: chore_config_id).pluck(:user_id)
       @last_user_index = get_last_user_index(chore_id)
 
       (1..now.end_of_month.day).each do |date|
         chore_date = Date.new(now.year, now.month, date)
-        move_user_index if beginning_of_new_week?(chore_date)
+        move_user_index(valid_user_ids) if beginning_of_new_week?(chore_date)
 
         ChoreCalendar.create(chore_id: chore_id, user_id: @user_ids[@last_user_index], chore_date: chore_date)
       end
     end
   end
 
-  def self.move_user_index
-    @last_user_index = (@last_user_index == @user_ids.length - 1) ? 0 : @last_user_index + 1
+  def self.move_user_index(valid_user_ids = nil)
+    valid = false
+    loop do
+      @last_user_index = (@last_user_index == @user_ids.length - 1) ? 0 : @last_user_index + 1
+      break if valid_user_ids.blank? || valid_user_ids.include?(@user_ids[@last_user_index])
+    end
   end
 
   def self.beginning_of_new_week?(date)

@@ -58,7 +58,11 @@ ChoreConfigUser.create(chore_config_id: cc5.id, user_id: caleb.id) unless ChoreC
 trash = Chore.find_by(name: "Take Trash Out") || Chore.create(name: "Take Trash Out")
 empty_dw = Chore.find_by(name: "Empty Dishwasher") || Chore.create(name: "Empty Dishwasher")
 
-ChoreConfig.create(active: true, schedule_type: ChoreConfig.schedule_types[:rotate_users_each_week], chore_id: trash.id) unless ChoreConfig.find_by(chore_id: trash.id)
+cc6 = ChoreConfig.create(active: true, schedule_type: ChoreConfig.schedule_types[:rotate_users_each_week], chore_id: trash.id) unless ChoreConfig.find_by(chore_id: trash.id)
+ChoreConfigUser.create(chore_config_id: cc6.id, user_id: nate.id) unless ChoreConfigUser.find_by(chore_config_id: cc6.id, user_id: nate.id)
+ChoreConfigUser.create(chore_config_id: cc6.id, user_id: josh.id) unless ChoreConfigUser.find_by(chore_config_id: cc6.id, user_id: josh.id)
+ChoreConfigUser.create(chore_config_id: cc6.id, user_id: caleb.id) unless ChoreConfigUser.find_by(chore_config_id: cc6.id, user_id: caleb.id)
+
 ChoreConfig.create(active: true, schedule_type: ChoreConfig.schedule_types[:rotate_users_each_week], chore_id: empty_dw.id) unless ChoreConfig.find_by(chore_id: empty_dw.id)
 
 # rotate daily - for this rule, set the first day and then have a rule/hook that when one of these get checked, another one gets created
