@@ -19,7 +19,7 @@ module ChoreSchedulerService
     now = Time.now
 
     chore_ids.each do |chore_id|
-      @last_user_index = get_last_user_index(chore_id)
+      @last_user_index = get_last_user_index(chore_id) || 0
       move_user_index
       ChoreCalendar.create(chore_id: chore_id, user_id: @user_ids[@last_user_index], chore_date: Date.new(now.year, now.month, 1))
     end
