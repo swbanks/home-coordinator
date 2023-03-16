@@ -5,40 +5,36 @@ import {useNavigate} from 'react-router-dom';
 const Login = () => {
   const navigate = useNavigate();
 
-  const [requirePassword, setRequirePassword] = useState(false);
+  const names = ["Nathanael", "Joshua", "Caleb", "Annalise"];
   const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
   
-  const onUserTypeChange = (event) => {
-    setRequirePassword(event.target.value == 'Parent');
+
+  const selectUserChange = (event) => {
+    const value = event.target.value;
+    if (value == "Select" || value == userName) return;
+
+    setUserName(value);
   };
 
   const handleSubmit = () => {
-    requirePassword ? navigate('/parent_checker') : navigate('/chores', { state: { name: userName } });
+    if (userName !== "") navigate('/chores', { state: { name: userName } });
   };
   
   return (
     <>
-      <label>What user type are you?</label>
-      <div className="pt-10 pb-10" onChange={onUserTypeChange}>
-        <input type="radio" value="Parent" name="user-type" /> Parent
-        <input type="radio" value="Child" name="user-type" /> Child
-      </div>
+      <h2 className="form-field pb-10">Hello There! Please select your username to login:</h2>
 
       {<form onSubmit={handleSubmit}>
-        <label className="form-field pb-10">Username:
-          <input
-            type="text"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-          />
-        </label>
-        {requirePassword && <label className="form-field pb-10">Password:
-          <input
-            type="text"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+        {<label className="form-field pb-10">Username:
+          <select onChange={selectUserChange}>
+            <option>Select</option>
+            {names.map((name) => {
+              return (
+                <option value={name}>{name}</option>
+              );
+
+          })}
+          </select>
         </label>}
         <input type="submit" value="Submit" />
       </form>}

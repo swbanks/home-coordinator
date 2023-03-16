@@ -1,6 +1,7 @@
 # Next Steps
 
 1. Password protect the parent login (do not need a username)
+    - use the *s 
 1. Method for "get today's chore status for user" - returns chore and status
 1. Use dropdown for Child login instead of text field
 1. Add/remove chores that I want them to do
@@ -11,11 +12,15 @@
 1. Allow the parent view to have the date associated with it
 1. Being able to navigate to the next and previous day in a single month
 1. Create some utility functions - figure out what I would want these to be
+    - are there any chores this month?
+    - add button to create chores for the month
+    - find all chores for one person for TODAY
+    - who has X chore today?
 1. Navigation to the correct page 
 1. Need a loader for png files because of the background image
 1. Get background image working
 1. Add interface where we can show how much time they have on devices, check for if they did chores w/o being told, more info they can add, etc
-
+1. If the kid clicks the last chore to be finished, they must save before displaying the fireworks
 
 # Different Tech
 

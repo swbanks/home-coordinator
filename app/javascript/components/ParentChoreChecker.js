@@ -47,7 +47,7 @@ const ParentChoreChecker = () => {
   };
 
   return (
-    <>
+    <div>
       <div className={isSaved ? "message-bar" : "empty-message-bar"}>Chore status has been saved.</div>
 
       <h1>Welcome parent! Please select which child's chores to check:</h1>
@@ -90,7 +90,7 @@ const ParentChoreChecker = () => {
         })}
         <button className="save" onClick={() => save()}>Save</button>
       </div>}
-    </>
+    </div>
   );
 };
 

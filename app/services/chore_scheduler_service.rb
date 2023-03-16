@@ -74,7 +74,7 @@ module ChoreSchedulerService
 
     chore_info.each do |chore_config_id, chore_id|
       valid_user_ids = ChoreConfigUser.where(chore_config_id: chore_config_id).pluck(:user_id)
-      @last_user_index = get_last_user_index(chore_id)
+      @last_user_index = get_last_user_index(chore_id) || 0
 
       (1..now.end_of_month.day).each do |date|
         chore_date = Date.new(now.year, now.month, date)
