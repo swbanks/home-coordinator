@@ -2,6 +2,26 @@ module ChoreSchedulerService
   SUNDAY = 0
   MONDAY = 1
 
+  def self.add_user_chore(username, chore_name, frequency)
+    user = User.find_by(name: username)
+    chore = Chore.find_by(name: chore_name)
+    return unless chore.present? && user.present?
+
+    date_range_from_frequency(frequency).each do |date|
+      chore_date = Date.new(Time.now.year, Time.now.month, date)
+      ChoreCalendar.create!(chore_id: chore.id, user_id: user.id, chore_date: chore_date)
+    end
+  end
+
+  def self.date_range_from_frequency(frequency)
+    now = Time.now
+    today = now.day
+
+    return (today..today) if frequency == "daily"
+    return (today..now.end_of_week.day) if frequency == "weekly"
+    (today..now.end_of_month.day)
+  end
+
   def self.create_month
     @user_ids = User.all.pluck(:id)
     all_users_all_days

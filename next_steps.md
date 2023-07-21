@@ -1,5 +1,21 @@
 # Next Steps
 
+Need remove chore for user for day/week/month
+Expand the add/remove chore to do it in the UI. We can have a dropdown for users, chores, and frequency
+Add the ability to add a chore from the UI
+
+Chore changes:
+- Need cubbies
+- load dishes
+- remove memory verse
+- load laundry
+- sort and put away laundry
+- clean bathroom
+- weedwhack - maybe just add it and assign on a given day
+- mow
+- make lunch for tomorrow
+- set out clothes for tomorrow
+
 1. Password protect the parent login (do not need a username)
     - use the *s 
 1. Method for "get today's chore status for user" - returns chore and status
@@ -20,6 +36,7 @@
 1. Need a loader for png files because of the background image
 1. Get background image working
 1. Add interface where we can show how much time they have on devices, check for if they did chores w/o being told, more info they can add, etc
+1. Add a counter on their screen so they can time their screen time - https://www.geeksforgeeks.org/how-to-create-a-countdown-timer-using-reactjs/
 1. If the kid clicks the last chore to be finished, they must save before displaying the fireworks
 
 # Different Tech
