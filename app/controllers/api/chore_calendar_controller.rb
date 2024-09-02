@@ -15,4 +15,9 @@ class Api::ChoreCalendarController < ApplicationController
     ChoreCalendarService.update_daily_chores(params[:_json])
     head :no_content
   end
+
+  def create
+    ChoreCalendarService.create_ad_hoc_chore(params[:chore], params[:user], Date.parse(params[:date]))
+    head :created
+  end
 end

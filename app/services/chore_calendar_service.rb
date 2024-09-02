@@ -13,4 +13,13 @@ module ChoreCalendarService
       # can I find the chore_config record? If so and its a daily, schedule tomorrow for the next user
     end
   end
+
+  def self.create_ad_hoc_chore(chore_name:, user_name:, date:)
+    chore = Chore.find_by(name: chore_name)
+    user = User.find_by(name: user_name)
+
+    return unless chore.present? && user.present?
+
+    ChoreCalendar.create!(chore_id: chore.id, user_id: user.id, chore_date: date)
+  end
 end

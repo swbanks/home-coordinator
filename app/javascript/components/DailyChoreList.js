@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash';
 import { format } from 'date-fns';
 
 const DailyChoreList = () => {
-  const currentDate = new Date().toJSON().slice(0, 10);
+  const currentDate = new Date().toDateString();
 
   const { state } = useLocation();
   const { name } = state;

@@ -7,6 +7,6 @@ Rails.application.routes.draw do
   namespace :api do
     resources :users
     resources :chores
-    resource :chore_calendar, only: [:show, :update], :controller => 'chore_calendar'
+    resource :chore_calendar, only: [:show, :update, :create], :controller => 'chore_calendar'
   end
 end
