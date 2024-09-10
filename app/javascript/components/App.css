@@ -33,6 +33,14 @@
   background-color: #eee;
 }
 
+.show-section {
+  display: block
+}
+
+.hide-section {
+  display: none
+}
+
 .empty-message-bar {
   display: none;
 }

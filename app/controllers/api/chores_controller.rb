@@ -3,7 +3,7 @@ class Api::ChoresController < ApplicationController
   def index
     chores = []
     Chore.find_each do |chore|
-      chores << chore.name
+      chores << {'id': chore.id, 'name': chore.name}
     end
 
     render json: chores
@@ -33,7 +33,7 @@ class Api::ChoresController < ApplicationController
 
   # delete a specific chore
   def destroy
-    chore = Chore.find(params["id"])
+    chore = Chore.find(params[:id])
     chore.destroy!
     head :no_content
   end

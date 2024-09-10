@@ -17,3 +17,11 @@ export async function updateChores(chores) {
       console.log(`Error in function updateChores, ${error}`);
   }
 }
+
+export async function createChoreMonth() {
+  try{
+    const response = await axios.post(`/api/chore_calendar/create_month`, {});
+  } catch(error) {
+      console.log(`Error in function createChoreMonth, ${error}`);
+  }
+}

@@ -2,6 +2,8 @@ module ChoreSchedulerService
   SUNDAY = 0
   MONDAY = 1
 
+  class ChoreMonthAlreadyCreatedError < StandardError; end
+
   def self.add_user_chore(username, chore_name, frequency)
     user = User.find_by(name: username)
     chore = Chore.find_by(name: chore_name)
@@ -23,6 +25,8 @@ module ChoreSchedulerService
   end
 
   def self.create_month
+    ChoreCalendar.where(chore_date: Time.now.beginning_of_month..Time.now.end_of_month).first.present? && raise(ChoreMonthAlreadyCreatedError)
+
     @user_ids = User.all.pluck(:id)
     all_users_all_days
     all_users_specific_days
