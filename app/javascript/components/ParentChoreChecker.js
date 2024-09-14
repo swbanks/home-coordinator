@@ -14,11 +14,14 @@ import {
   getDailyChoreCalendarForUser,
   updateChores,
   createChoreMonth,
+  deleteOldChoreCalendarRecords,
+
 } from "../services/ChoreCalendarService";
 import {
   createChore,
   deleteChore,
   getChores,
+  updateFamilyVerse,
 } from "../services/ChoreService";
 import { isEmpty } from "lodash";
 
@@ -35,11 +38,13 @@ const ParentChoreChecker = () => {
   const [displaySections, setDisplaySections] = React.useState({
     intro: true,
     chores: false,
-    addChore: false,
+    utilities: false,
   });
 
   const createChoreRef = useRef(null);
   const deleteChoreRef = useRef(null);
+  const deleteOldChoresRef = useRef(null);
+  const updateVerseRef = useRef(null);
 
   const handleChoreCheckChanged = (index) => {
     let newChores = [...chores];
@@ -68,10 +73,10 @@ const ParentChoreChecker = () => {
     const value = event.target.value;
     if (value == "chores") {
       console.log("chores");
-      setDisplaySections({ intro: false, addChore: false, chores: true });
-    } else if (value == "addChore") {
+      setDisplaySections({ intro: false, utilities: false, chores: true });
+    } else if (value == "utilities") {
       getDeleteChoreList();
-      setDisplaySections({ intro: false, addChore: true, chores: false });
+      setDisplaySections({ intro: false, utilities: true, chores: false });
     }
   };
 
@@ -81,6 +86,7 @@ const ParentChoreChecker = () => {
       setDeleteChoreList(response);
     });
   }
+
   const addChore = () => {
     console.log("add chore");
     const choreName = createChoreRef.current?.value;
@@ -100,9 +106,25 @@ const ParentChoreChecker = () => {
   const createMonth = () => {
     createChoreMonth().then((response) => {
       console.log(response);
-      alert("Chore month created"); //show something on the screen saying this worked
+      alert("Chore month already created"); //show something on the screen saying this worked
     });
   };
+
+  const deleteOldChores = () => {
+    const date = deleteOldChoresRef.current?.value;
+    deleteOldChoreCalendarRecords(date).then((response) => {
+      console.log(response);
+      alert("Old chores deleted");
+    });
+  }
+
+  const updateVerse = () => {
+    const verse = updateVerseRef.current?.value;
+    updateFamilyVerse(verse).then((response) => {
+      console.log(response);
+      alert("Family verse updated");
+    });
+  }
 
   return (
     <div>
@@ -112,11 +134,11 @@ const ParentChoreChecker = () => {
         <h2>Welcome parent! Please select an option below:</h2>
         <select onChange={changeSectionDisplay}>
           <option value="n/a">Select</option>
-          <option value="addChore">Add Chore</option>
+          <option value="utilities">Utilities</option>
           <option value="chores">Check Chores</option>
         </select>
       </div>
-      <div className={displaySections["addChore"] ? "show-section" : "hide-section"}>
+      <div className={displaySections["utilities"] ? "show-section" : "hide-section"}>
         <div>
           <h2>Please enter a chore to add:</h2>
           <input type="text" ref={createChoreRef}></input>
@@ -129,11 +151,19 @@ const ParentChoreChecker = () => {
             {deleteChoreList.map((chore) => {
               return <option value={chore.id}>{chore.name}</option>;
             })}
-        </select>
+          </select>
           <button onClick={removeChore}>Delete</button>
         </div>
         <div>
           <button onClick={createMonth}>Create Month</button>
+        </div>
+        <div>
+          <input type="text" ref={deleteOldChoresRef}></input>
+          <button onClick={deleteOldChores}>Delete old chores</button>
+        </div>
+        <div>
+          <input type="text" ref={updateVerseRef}></input>
+          <button onClick={updateVerse}>Update family verse</button>
         </div>
       </div>
       <div

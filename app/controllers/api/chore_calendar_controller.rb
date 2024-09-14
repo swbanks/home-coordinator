@@ -21,6 +21,12 @@ class Api::ChoreCalendarController < ApplicationController
     head :created
   end
 
+  def delete_old
+    chore_date = Date.parse(params[:date])
+    ChoreCalendarService.delete_old_chores(chore_date)
+    head :no_content
+  end
+
   def create_month
     ChoreSchedulerService.create_month
     head :created

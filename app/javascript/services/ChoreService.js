@@ -29,3 +29,13 @@ export async function deleteChore(choreId) {
       return [];
   }
 }
+
+export async function updateFamilyVerse(verse) {
+  try{
+    const response = await axios.post(`/api/chores/update_family_verse`, {verse: verse});
+    return response.data;
+  } catch(error) {
+      console.log(`Error in function updateVerse, ${error}`);
+      return [];
+  }
+}

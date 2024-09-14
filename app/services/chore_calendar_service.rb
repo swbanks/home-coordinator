@@ -22,4 +22,8 @@ module ChoreCalendarService
 
     ChoreCalendar.create!(chore_id: chore.id, user_id: user.id, chore_date: date)
   end
+
+  def self.delete_old_chores(date)
+    ChoreCalendar.where('chore_date < ?', date).destroy_all
+  end
 end

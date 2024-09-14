@@ -37,4 +37,10 @@ class Api::ChoresController < ApplicationController
     chore.destroy!
     head :no_content
   end
+
+  def update_family_verse
+    chore = Chore.where("name LIKE 'Family Verse - %'").first
+    chore.update!(name: "Family Verse - #{params[:verse]}")
+    head :no_content
+  end
 end

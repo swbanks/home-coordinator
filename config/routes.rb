@@ -9,5 +9,7 @@ Rails.application.routes.draw do
     resources :chores
     resource :chore_calendar, only: [:show, :update, :create], :controller => 'chore_calendar'
     post '/chore_calendar/create_month', to: 'chore_calendar#create_month'
+    post '/chore_calendar/delete_old', to: 'chore_calendar#delete_old'
+    post '/chores/update_family_verse', to: 'chores#update_family_verse'
   end
 end

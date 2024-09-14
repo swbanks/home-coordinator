@@ -25,3 +25,11 @@ export async function createChoreMonth() {
       console.log(`Error in function createChoreMonth, ${error}`);
   }
 }
+
+export async function deleteOldChoreCalendarRecords(date) {
+  try{
+    const response = await axios.post(`/api/chore_calendar/delete_old`, {date: date});
+  } catch(error) {
+      console.log(`Error in function deleteOldChoreCalendarRecords, ${error}`);
+  }
+}
