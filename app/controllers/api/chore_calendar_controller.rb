@@ -6,7 +6,8 @@ class Api::ChoreCalendarController < ApplicationController
   end
 
   def show
-    chore_date = Date.parse(params[:date])
+    # chore_date = Date.parse(params[:date])
+    chore_date = Date.strptime(params[:date], '%m/%d/%Y')
     chores = ChoreCalendarService.get_daily_chores_for_user(params[:user], chore_date)
     render json: chores.empty? ? [] : chores.to_json(only: [:id, :checked, :user_completed], :include => {:chore => {:only => :name}})
   end
@@ -17,8 +18,10 @@ class Api::ChoreCalendarController < ApplicationController
   end
 
   def create
-    ChoreCalendarService.create_ad_hoc_chore(params[:chore], params[:user], Date.parse(params[:date]))
+    ChoreCalendarService.create_ad_hoc_chore(chore_id: params[:chore_id], user_id: params[:user_id], date: Date.parse(params[:date]))
     head :created
+  rescue ChoreCalendarService::ChoreOrUserNotFound
+    head :bad_request
   end
 
   def delete_old

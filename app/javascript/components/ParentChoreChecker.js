@@ -9,13 +9,13 @@ Allow user to go back to child select.
 Eventually maybe we can cycle between days?
 */
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   getDailyChoreCalendarForUser,
   updateChores,
   createChoreMonth,
   deleteOldChoreCalendarRecords,
-
+  createAdHocChore,
 } from "../services/ChoreCalendarService";
 import {
   createChore,
@@ -23,17 +23,17 @@ import {
   getChores,
   updateFamilyVerse,
 } from "../services/ChoreService";
+import { getUsers } from "../services/UserService";
 import { isEmpty } from "lodash";
 
-// I need a user dropdown, chore dropdown, and a date picker textbox (or calendar)
-// I also need sections for picking either chores to check or assigning an ad-hoc chore
 const ParentChoreChecker = () => {
-  const currentDate = new Date().toJSON().slice(0, 10);
+  const currentDate = new Date().toLocaleDateString();
 
   const names = ["Nathanael", "Joshua", "Caleb", "Annalise"];
   const [choreUserName, setChoreUserName] = useState("");
-  const [deleteChoreList, setDeleteChoreList] = useState([]);
-  const [chores, setChores] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [choreList, setChoreList] = useState([]);
+  const [userChores, setUserChores] = useState(null);
   const [isSaved, setIsSaved] = useState(false);
   const [displaySections, setDisplaySections] = React.useState({
     intro: true,
@@ -45,15 +45,18 @@ const ParentChoreChecker = () => {
   const deleteChoreRef = useRef(null);
   const deleteOldChoresRef = useRef(null);
   const updateVerseRef = useRef(null);
+  const adHocChoreUserRef = useRef(null);
+  const adHocChoreChoreRef = useRef(null);
+  const adHocChoreDateRef = useRef(null);
 
   const handleChoreCheckChanged = (index) => {
-    let newChores = [...chores];
+    let newChores = [...userChores];
     newChores[index].checked = !newChores[index].checked;
-    setChores(newChores);
+    setUserChores(newChores);
   };
 
   const save = () => {
-    updateChores(chores).then((_) => {
+    updateChores(userChores).then((_) => {
       setIsSaved(true);
       setTimeout(() => setIsSaved(false), 7000);
     });
@@ -65,14 +68,13 @@ const ParentChoreChecker = () => {
 
     setChoreUserName(value);
     getDailyChoreCalendarForUser(value, currentDate).then((response) => {
-      setChores(response);
+      setUserChores(response);
     });
   };
 
   const changeSectionDisplay = (event) => {
     const value = event.target.value;
     if (value == "chores") {
-      console.log("chores");
       setDisplaySections({ intro: false, utilities: false, chores: true });
     } else if (value == "utilities") {
       getDeleteChoreList();
@@ -83,9 +85,9 @@ const ParentChoreChecker = () => {
   const getDeleteChoreList = () => {
     getChores().then((response) => {
       console.log(response);
-      setDeleteChoreList(response);
+      setChoreList(response);
     });
-  }
+  };
 
   const addChore = () => {
     console.log("add chore");
@@ -116,7 +118,7 @@ const ParentChoreChecker = () => {
       console.log(response);
       alert("Old chores deleted");
     });
-  }
+  };
 
   const updateVerse = () => {
     const verse = updateVerseRef.current?.value;
@@ -124,7 +126,24 @@ const ParentChoreChecker = () => {
       console.log(response);
       alert("Family verse updated");
     });
-  }
+  };
+
+  const AddAdHocChore = () => {
+    const date = adHocChoreDateRef.current?.value;
+    const userId = adHocChoreUserRef.current?.value;
+    const choreId = adHocChoreChoreRef.current?.value;
+    createAdHocChore(choreId, userId, date).then((response) => {
+      console.log(response);
+      alert("Ad-hoc chore created");
+    });
+  };
+
+  useEffect(() => {
+    getUsers().then((response) => {
+      setUsers(response);
+    });
+  }, []);
+  
 
   return (
     <div>
@@ -138,7 +157,11 @@ const ParentChoreChecker = () => {
           <option value="chores">Check Chores</option>
         </select>
       </div>
-      <div className={displaySections["utilities"] ? "show-section" : "hide-section"}>
+      <div
+        className={
+          displaySections["utilities"] ? "show-section" : "hide-section"
+        }
+      >
         <div>
           <h2>Please enter a chore to add:</h2>
           <input type="text" ref={createChoreRef}></input>
@@ -148,11 +171,28 @@ const ParentChoreChecker = () => {
           <h2>Please select a chore to delete:</h2>
           <select ref={deleteChoreRef}>
             <option>Select</option>
-            {deleteChoreList.map((chore) => {
+            {choreList.map((chore) => {
               return <option value={chore.id}>{chore.name}</option>;
             })}
           </select>
           <button onClick={removeChore}>Delete</button>
+        </div>
+        <div>
+          <h2>Create an ad-hoc chore:</h2>
+          <select ref={adHocChoreChoreRef}>
+            <option>Select</option>
+            {choreList.map((chore) => {
+              return <option value={chore.id}>{chore.name}</option>;
+            })}
+          </select>
+          <select ref={adHocChoreUserRef}>
+            <option>Select</option>
+            {users.map((user) => {
+              return <option value={user.id}>{user.name}</option>;
+            })}
+          </select>
+          <input type="text" ref={adHocChoreDateRef}></input>
+          <button onClick={AddAdHocChore}>Create Ad-Hoc Chore</button>
         </div>
         <div>
           <button onClick={createMonth}>Create Month</button>
@@ -182,12 +222,12 @@ const ParentChoreChecker = () => {
         </select>
 
         <div className="grid-parent-header"></div>
-        {!isEmpty(chores) && (
+        {!isEmpty(userChores) && (
           <div className="grid-parent-checker">
             <div>Chore</div>
             <div>✅ by child</div>
             <div>✅ by parent</div>
-            {chores.map((chore, index) => {
+            {userChores.map((chore, index) => {
               return (
                 <>
                   <div className="item">{chore.chore.name}</div>

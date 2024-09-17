@@ -33,3 +33,11 @@ export async function deleteOldChoreCalendarRecords(date) {
       console.log(`Error in function deleteOldChoreCalendarRecords, ${error}`);
   }
 }
+
+export async function createAdHocChore(choreId, userId, date) {
+  try{
+    const response = await axios.post(`/api/chore_calendar`, {chore_id: choreId, user_id: userId, date: date});
+  } catch(error) {
+      console.log(`Error in function createAdHocChore, ${error}`);
+  }
+}

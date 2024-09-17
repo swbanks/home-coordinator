@@ -1,4 +1,6 @@
 module ChoreCalendarService
+  class ChoreOrUserNotFound < StandardError; end
+
   def self.get_daily_chores_for_user(user_name, date)
     # when to schedule daily chores. Check yesterday to see if the daily chores were completed. If not
     user = User.find_by(name: user_name)
@@ -14,11 +16,11 @@ module ChoreCalendarService
     end
   end
 
-  def self.create_ad_hoc_chore(chore_name:, user_name:, date:)
-    chore = Chore.find_by(name: chore_name)
-    user = User.find_by(name: user_name)
+  def self.create_ad_hoc_chore(chore_id:, user_id:, date:)
+    chore = Chore.find(chore_id)
+    user = User.find(user_id)
 
-    return unless chore.present? && user.present?
+    raise ChoreOrUserNotFound unless chore.present? && user.present?
 
     ChoreCalendar.create!(chore_id: chore.id, user_id: user.id, chore_date: date)
   end
